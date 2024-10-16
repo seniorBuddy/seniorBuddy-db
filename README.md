@@ -3,10 +3,14 @@
 # AWS RDS에서 사용할 MySQL 쿼리문
 
 ## 추가 명령어
-   USE seniorbuddy_db;
  - sql 접근
    ```bash
    mysql -h <RDS_endpoint> -P <Port> -u <username> -p
+   ```
+ - 데이터베이스 추가
+   ```sql
+   CREATE DATABASE 생성할DB이름 DEFAULT CHARACTER SET UTF8;
+   USE seniorbuddy_db;
    ```
  - 테이블 목록
    ```sql
