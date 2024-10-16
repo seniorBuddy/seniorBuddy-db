@@ -21,18 +21,20 @@ CREATE TABLE IF NOT EXISTS assistant_threads (
     thread_id CHAR(36) PRIMARY KEY,
     user_id INT UNIQUE NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    run_state VARCHAR(50) NOT NULL,
-    run_id VARCHAR(100),
+    run_state VARCHAR(50) NULL,
+    run_id VARCHAR(100) NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS assistant_messages (
     message_id CHAR(36) PRIMARY KEY, 
-    thread_id CHAR(36) UNIQUE NOT NULL,
+    thread_id CHAR(36) NOT NULL,
     sender_type ENUM('user', 'system', 'assistant') NOT NULL,
     content TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (thread_id) REFERENCES assistant_threads(thread_id) ON DELETE CASCADE
+    --FOREIGN KEY (thread_id) REFERENCES assistant_threads(thread_id) ON DELETE CASCADE -- 무결정 보장하지만 삭제할때 메세지 많으면 성능영향 있을수도
+    FOREIGN KEY (thread_id) REFERENCES assistant_threads(thread_id) ON DELETE SET NULL    -- thread_id를 null로 만듬으로 연결을 끊습니다.
+                                                                                          -- 점검 혹은 서버 부하가 적을 때 점진적으로 삭제하거나 다른 곳으로 옮기기 -> 성능 영향 줄임.
 );
 
 -- 복약 시간 테이블
