@@ -32,9 +32,7 @@ CREATE TABLE IF NOT EXISTS assistant_messages (
     sender_type ENUM('user', 'system', 'assistant') NOT NULL,
     content TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    --FOREIGN KEY (thread_id) REFERENCES assistant_threads(thread_id) ON DELETE CASCADE -- 무결정 보장하지만 삭제할때 메세지 많으면 성능영향 있을수도
-    FOREIGN KEY (thread_id) REFERENCES assistant_threads(thread_id) ON DELETE SET NULL    -- thread_id를 null로 만듬으로 연결을 끊습니다.
-                                                                                          -- 점검 혹은 서버 부하가 적을 때 점진적으로 삭제하거나 다른 곳으로 옮기기 -> 성능 영향 줄임.
+    FOREIGN KEY (thread_id) REFERENCES assistant_threads(thread_id) ON DELETE SET NULL
 );
 
 -- 복약 시간 테이블
