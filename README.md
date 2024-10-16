@@ -8,7 +8,7 @@
    mysql -h <RDS_endpoint> -P <Port> -u <username> -p
    ```
  - 데이터베이스 추가
-   ```sql
+   ```mysql
    CREATE DATABASE 생성할DB이름 DEFAULT CHARACTER SET UTF8;
    USE seniorbuddy_db;
    ```
