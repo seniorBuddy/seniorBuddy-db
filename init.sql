@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS assistant_threads (
 
 CREATE TABLE IF NOT EXISTS assistant_messages (
     message_id CHAR(36) PRIMARY KEY, 
-    thread_id CHAR(36) NOT NULL,
+    thread_id CHAR(36),
     sender_type ENUM('user', 'system', 'assistant') NOT NULL,
     content TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
