@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS users (
     last_login DATETIME NULL,
     latitude FLOAT NULL,
     longitude FLOAT NULL,
-    last_update_location DATETIME NULL
+    last_update_location DATETIME NULL,
+    ai_profile INT DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS assistant_threads (
