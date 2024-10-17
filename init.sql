@@ -17,6 +17,15 @@ CREATE TABLE IF NOT EXISTS users (
     ai_profile INT DEFAULT 1
 );
 
+CREATE TABLE refresh_tokens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    token VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL,
+    created_at DATETIME NOT NULL,
+    expires_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
 CREATE TABLE IF NOT EXISTS assistant_threads (
     thread_id CHAR(36) PRIMARY KEY,
     user_id INT UNIQUE NOT NULL,
