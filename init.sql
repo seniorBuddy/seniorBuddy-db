@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_real_name VARCHAR(100) NOT NULL,
     user_uuid VARCHAR(36) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    user_type ENUM('senior', 'guardian', 'external_company', 'admin') NOT NULL,
+    user_type VARCHAR(16) NOT NULL,
     phone_number VARCHAR(20) NOT NULL,
     email VARCHAR(100) UNIQUE NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS assistant_threads (
 CREATE TABLE IF NOT EXISTS assistant_messages (
     message_id CHAR(36) PRIMARY KEY, 
     thread_id CHAR(36),
-    sender_type ENUM('user', 'system', 'assistant') NOT NULL,
+    sender_type VARCHAR(18) NOT NULL,
     content TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (thread_id) REFERENCES assistant_threads(thread_id) ON DELETE SET NULL
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS reminders (
     content TEXT NOT NULL,
     mind_date DATE NOT NULL,
     mind_time TIME NOT NULL,
-    type ENUM('general', 'medication') NOT NULL,
+    type VARCHAR(16) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
