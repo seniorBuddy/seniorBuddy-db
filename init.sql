@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS assistant_threads (
 );
 
 CREATE TABLE IF NOT EXISTS assistant_messages (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
     thread_id CHAR(36),
     sender_type VARCHAR(18) NOT NULL,
     content TEXT NOT NULL,
