@@ -54,7 +54,6 @@ CREATE TABLE IF NOT EXISTS reminders (
     reminder_time TIME NOT NULL,
     repeat_interval VARCHAR(16),       -- 반복 주기 ('daily', 'weekly', 'monthly', null 등)
     repeat_day INT,                    -- 반복 요일 (1=월요일, 7=일요일, null 가능)
-    repeat_until DATE,                 -- 반복 종료일 (null이면 무한 반복)
     additional_info TEXT,              -- 기타 사항 입력
     notify BOOLEAN NOT NULL,           -- 알람 여부
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
