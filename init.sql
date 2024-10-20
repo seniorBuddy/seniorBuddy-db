@@ -44,41 +44,22 @@ CREATE TABLE IF NOT EXISTS assistant_messages (
     FOREIGN KEY (thread_id) REFERENCES assistant_threads(thread_id) ON DELETE SET NULL
 );
 
--- 복약 시간 테이블
-CREATE TABLE IF NOT EXISTS medication_times (
-    medication_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    medication_name VARCHAR(100) NOT NULL,
-    dosage VARCHAR(50) NOT NULL,
-    medication_time TIME NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
-);
-
--- 리마인더 테이블
 CREATE TABLE IF NOT EXISTS reminders (
     reminder_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     content TEXT NOT NULL,
-    mind_date DATE NOT NULL,
-    mind_time TIME NOT NULL,
-    type VARCHAR(16) NOT NULL,
+    reminder_type VARCHAR(16) NOT NULL, -- 'medication' or 'hospital' or 'appointment'
+    start_date DATE NOT NULL,
+    end_date DATE,
+    reminder_time TIME NOT NULL,
+    repeat_interval VARCHAR(16),       -- 반복 주기 ('daily', 'weekly', 'monthly', null 등)
+    repeat_day INT,                    -- 반복 요일 (1=월요일, 7=일요일, null 가능)
+    repeat_until DATE,                 -- 반복 종료일 (null이면 무한 반복)
+    additional_info TEXT,              -- 기타 사항 입력
+    notify BOOLEAN NOT NULL,           -- 알람 여부
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS notification_settings (
-    notification_id INT AUTO_INCREMENT PRIMARY KEY,
-    reminder_id INT,
-    medication_id INT,
-    notify_time TIME NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (reminder_id) REFERENCES reminders(reminder_id) ON DELETE CASCADE,
-    FOREIGN KEY (medication_id) REFERENCES medication_times(medication_id) ON DELETE CASCADE,
-    CHECK ((reminder_id IS NOT NULL AND medication_id IS NULL) OR
-           (reminder_id IS NULL AND medication_id IS NOT NULL))
-);
-
-CREATE INDEX idx_user_id_medication_times ON medication_times(user_id);
+-- 사용자 ID별로 빠른 조회를 위한 인덱스 생성
 CREATE INDEX idx_user_id_reminders ON reminders(user_id);
-CREATE INDEX idx_notify_time_notification_settings ON notification_settings(notify_time);
