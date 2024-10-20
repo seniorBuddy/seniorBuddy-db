@@ -62,3 +62,5 @@ CREATE TABLE IF NOT EXISTS reminders (
 
 -- 사용자 ID별로 빠른 조회를 위한 인덱스 생성
 CREATE INDEX idx_user_id_reminders ON reminders(user_id);
+
+SET time_zone = '+09:00';
