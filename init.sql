@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_uuid VARCHAR(36) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     user_type VARCHAR(16) NOT NULL,
-    phone_number VARCHAR(20) NOT NULL,
+    phone_number VARCHAR(20),
     email VARCHAR(100) UNIQUE NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     last_login DATETIME NULL,
