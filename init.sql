@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS reminders (
     start_date DATE NOT NULL,                -- 알람일자 ( 반복 시작일 )
     end_date DATE,                           -- 반복 종료일
     reminder_time TIME NOT NULL,             -- 알람시간
-    repeat_day VARCHAR(255),                 -- LIST 혹은 JSON으로 요일 배열 (예: '["1", "3", "5"]')
+    repeat_day JSON,                 -- LIST 혹은 JSON으로 요일 배열 (예: '["1", "3", "5"]')
     additional_info TEXT,                    -- 추가정보
     notify BOOLEAN NOT NULL DEFAULT TRUE,    -- 알람여부
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
