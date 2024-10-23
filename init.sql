@@ -47,16 +47,15 @@ CREATE TABLE IF NOT EXISTS assistant_messages (
 
 CREATE TABLE IF NOT EXISTS reminders (
     reminder_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    content TEXT NOT NULL,
-    reminder_type VARCHAR(16) NOT NULL, -- 'medication' or 'hospital' or 'appointment'
-    start_date DATE NOT NULL,
-    end_date DATE,
-    reminder_time TIME NOT NULL,
-    repeat_interval VARCHAR(16),       -- 반복 주기 ('daily', 'weekly', 'monthly', null 등)
-    repeat_day INT,                    -- 반복 요일 (1=월요일, 7=일요일, null 가능)
-    additional_info TEXT,              -- 기타 사항 입력
-    notify BOOLEAN NOT NULL,           -- 알람 여부
+    user_id INT NOT NULL,                    -- 유저 id 자동 할당하게됨.
+    content TEXT NOT NULL,                   -- 알람 내용 (혹은 제목)
+    reminder_type VARCHAR(16) NOT NULL,      -- 예: 'medication', 'hospital', 'other' 등..
+    start_date DATE NOT NULL,                -- 알람일자 ( 반복 시작일 )
+    end_date DATE,                           -- 반복 종료일
+    reminder_time TIME NOT NULL,             -- 알람시간
+    repeat_day VARCHAR(255),                 -- LIST 혹은 JSON으로 요일 배열 (예: '["1", "3", "5"]')
+    additional_info TEXT,                    -- 추가정보
+    notify BOOLEAN NOT NULL DEFAULT TRUE,    -- 알람여부
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
