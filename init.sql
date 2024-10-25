@@ -45,22 +45,37 @@ CREATE TABLE IF NOT EXISTS assistant_messages (
     FOREIGN KEY (thread_id) REFERENCES assistant_threads(thread_id) ON DELETE SET NULL
 );
 
-CREATE TABLE IF NOT EXISTS reminders (
+CREATE TABLE IF NOT EXISTS medication_reminders (
     reminder_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,                    -- 유저 id 자동 할당하게됨.
-    content TEXT NOT NULL,                   -- 알람 내용 (혹은 제목)
-    reminder_type VARCHAR(16) NOT NULL,      -- 예: 'medication', 'hospital', 'other' 등..
-    start_date DATE NOT NULL,                -- 알람일자 ( 반복 시작일 )
-    end_date DATE,                           -- 반복 종료일
-    reminder_time TIME NOT NULL,             -- 알람시간
-    repeat_day JSON,                 -- LIST 혹은 JSON으로 요일 배열 (예: '["1", "3", "5"]')
-    additional_info TEXT,                    -- 추가정보
-    notify BOOLEAN NOT NULL DEFAULT TRUE,    -- 알람여부
+    user_id INT NOT NULL,
+    content TEXT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    dose_morning BOOLEAN NOT NULL,           -- 아침 복용 여부
+    dose_breakfast_before BOOLEAN NOT NULL,  -- 아침 식사 전 복용 여부
+    dose_breakfast_after BOOLEAN NOT NULL,   -- 아침 식사 후 복용 여부
+    dose_lunch_before BOOLEAN NOT NULL,      -- 점심 식사 전 복용 여부
+    dose_lunch_after BOOLEAN NOT NULL,       -- 점심 식사 후 복용 여부
+    dose_dinner_before BOOLEAN NOT NULL,     -- 저녁 식사 전 복용 여부
+    dose_dinner_after BOOLEAN NOT NULL,      -- 저녁 식사 후 복용 여부
+    dose_bedtime BOOLEAN NOT NULL,           -- 취침 전 복용 여부
+    additional_info TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
--- 사용자 ID별로 빠른 조회를 위한 인덱스 생성
-CREATE INDEX idx_user_id_reminders ON reminders(user_id);
+CREATE TABLE IF NOT EXISTS hospital_reminders (
+    reminder_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    content TEXT NOT NULL,
+    start_date DATE NOT NULL,
+    reminder_time TIME NOT NULL,
+    additional_info TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_user_id_medication_reminders ON medication_reminders(user_id);
+CREATE INDEX idx_user_id_hospital_reminders ON hospital_reminders(user_id);
 
 SET time_zone = '+09:00';
