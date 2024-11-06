@@ -18,6 +18,22 @@ CREATE TABLE IF NOT EXISTS users (
     CONSTRAINT chk_contact CHECK (phone_number IS NOT NULL OR email IS NOT NULL)
 );
 
+CREATE TABLE IF NOT EXISTS user_schedule (
+    user_id INT PRIMARY KEY,
+    breakfast_time TIME NULL,
+    lunch_time TIME NULL,
+    dinner_time TIME NULL,
+    bedtime_time TIME NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    INDEX idx_user_id (user_id),
+
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) 
+    REFERENCES users(user_id) 
+    ON DELETE CASCADE
+);
+
 CREATE TABLE refresh_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     token VARCHAR(255) NOT NULL,
