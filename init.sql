@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
     longitude FLOAT NULL,
     last_update_location DATETIME NULL,
     ai_profile INT DEFAULT 1,
+    fcm_token VARCHAR(255),
     CONSTRAINT chk_contact CHECK (phone_number IS NOT NULL OR email IS NOT NULL)
 );
 
