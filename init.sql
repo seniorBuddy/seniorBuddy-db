@@ -19,6 +19,17 @@ CREATE TABLE IF NOT EXISTS users (
     CONSTRAINT chk_contact CHECK (phone_number IS NOT NULL OR email IS NOT NULL)
 );
 
+CREATE TABLE scheduled_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    scheduled_time DATETIME NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS user_schedule (
     user_id INT PRIMARY KEY,
     breakfast_time TIME NULL,
