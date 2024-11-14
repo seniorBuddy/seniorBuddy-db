@@ -32,6 +32,7 @@ CREATE TABLE scheduled_messages (
 
 CREATE TABLE IF NOT EXISTS user_schedule (
     user_id INT PRIMARY KEY,
+    morning_time TIME NULL,
     breakfast_time TIME NULL,
     lunch_time TIME NULL,
     dinner_time TIME NULL,
